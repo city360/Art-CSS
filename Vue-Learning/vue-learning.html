@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <p>{{message}}</p>
+    <input type="text" v-model="message" placeholder="请输入">
+    <button @click="conOut">输出</button>
+    <ul>
+        <li v-for="item in mesList">{{item}}</li>
+    </ul>
+</div>
+<div id="components-demo">
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+</div>
+<script type="text/javascript">
+  new Vue({
+    el:'#app',
+    data:{
+      message:"这是vue2.0网页使用尝试",
+      mesList:['1','2']
+    },
+    computed:{
+      msg(){
+        console.log("msg==");
+        return 'vue2.0使用';
+      }
+    },
+    methods:{
+      conOut(){
+        this.mesList.push(this.message)
+      }
+    },
+    beforeMount(){
+      console.log("挂载前生命周期");
+    },
+    mounted(){
+      console.log("挂载完成生命周期");
+    },
+    watch:{
+      'message'(){
+        console.log("监视器调用");
+      }
+    }
+  })
+
+  const Button = Vue.component('button-counter', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  })
+
+
+  new Vue({ el: '#components-demo' ,
+    components: {
+      'button-counter': Button
+    }
+  })
+  // 写一个组件
+  // 定义一个名为 button-counter 的新组件
+
+</script>
+</body>
+</html>
